@@ -6,19 +6,12 @@ pipeline {
             steps {
                 script {
                     // Check if pip3 is installed
-                    if (!sh(script: 'command -v pip3', returnStatus: true)) {
-                        echo "pip3 not found. Installing pip3..."
-                        sh 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
-                        sh 'apt install python3-pip'
-                    }
-
-                    // Ensure ~/.local/bin is in the PATH
-                    env.PATH = "${env.HOME}/.local/bin:${env.PATH}"
-
-                    // Install AWS CLI using pip3
-                    sh 'pip3 install --user awscli'
-
-                    // Verify the AWS CLI installation
+                   sh """
+                    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                        unzip awscliv2.zip
+                         ./aws/install
+                    """
+                     // Verify the AWS CLI installation
                     sh 'aws --version'
                 }
             }
