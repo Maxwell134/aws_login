@@ -42,10 +42,19 @@ pipeline {
         stage('check workspace') {
             steps {
                 script {
-                    sh 'cat $WORKSPACE'
+                    sh 'ls -lrtha $WORKSPACE'
                     
                 }    
             }
         }
+        
+        post {
+           always {
+            // Clean up workspace at the end of the pipeline
+            sh 'rm -rf $WORKSPACE'
+        }
     }
+}
+}
+
 }
