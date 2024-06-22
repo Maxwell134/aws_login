@@ -16,4 +16,4 @@ def aws_login(accessKeyId, secretAccessKey, region) {
     }
 }
 
-return True
+return this
