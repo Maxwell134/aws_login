@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCESS_KEY_ID = ''
-        AWS_SECRET_ACCESS_KEY = ''
-        AWS_REGION = ''
+        AWS_ACCESS_KEY_ID = ''  // Set your AWS access key ID
+        AWS_SECRET_ACCESS_KEY = ''  // Set your AWS secret access key
+        AWS_REGION = ''  // Set your AWS region
     }
 
     stages {
@@ -28,6 +28,7 @@ pipeline {
                     echo "region: ${region}"
 
                     // Configure AWS CLI with retrieved credentials
+                    // Uncomment and adjust as needed
                     // sh """
                     // aws configure set aws_access_key_id ${accessKeyId}
                     // aws configure set aws_secret_access_key ${secretAccessKey}
@@ -39,22 +40,21 @@ pipeline {
                 }
             }
         }
-        stage('check workspace') {
+
+        stage('Check Workspace') {
             steps {
                 script {
+                    // List files in workspace for verification
                     sh 'ls -lrtha $WORKSPACE'
-                    
-                }    
+                }
             }
         }
-        
-        post {
-           always {
+    }
+
+    post {
+        always {
             // Clean up workspace at the end of the pipeline
             sh 'rm -rf $WORKSPACE'
         }
     }
-}
-}
-
 }
