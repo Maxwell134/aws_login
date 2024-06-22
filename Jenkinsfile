@@ -39,5 +39,11 @@ pipeline {
                 }
             }
         }
+        stage('check workspace') {
+            steps {
+                script {
+                    sh 'cat $WORKSPACE'
+                    
+                }
     }
 }
