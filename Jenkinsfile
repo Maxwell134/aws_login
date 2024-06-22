@@ -9,7 +9,7 @@ pipeline {
                     if (!sh(script: 'command -v pip3', returnStatus: true)) {
                         echo "pip3 not found. Installing pip3..."
                         sh 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
-                        sh 'python3 get-pip.py --user'
+                        sh 'apt install python3-pip'
                     }
 
                     // Ensure ~/.local/bin is in the PATH
