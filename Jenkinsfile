@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'amazonlinux:latest' // Use an appropriate Docker image
+            image 'amazonlinux:latest' // Replace with appropriate Docker image
             reuseNode true  // Reuse containers for subsequent steps
         }
     }
@@ -10,12 +10,11 @@ pipeline {
         stage('Install and Configure AWS CLI') {
             steps {
                 script {
-                    // Install AWS CLI using pip
-                    sh '''
-                    yum install -y python3-pip
-                    pip3 install --upgrade pip
-                    pip3 install awscli --user
-                    '''
+                    // Install necessary dependencies if not already installed
+                    sh 'yum install -y python3-pip'
+
+                    // Install AWS CLI using pip3
+                    sh 'pip3 install awscli --upgrade --user'
 
                     // Verify AWS CLI installation
                     sh 'aws --version'
