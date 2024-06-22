@@ -8,11 +8,11 @@ def aws_login(accessKeyId, secretAccessKey, region) {
         def credentials = new JsonSlurper().parseText(jsonFile)
 
         // Use passed parameters or fallback to JSON credentials if not provided
-        accessKeyId = accessKeyId ?: credentials.accessKeyId
-        secretAccessKey = secretAccessKey ?: credentials.secretAccessKey
-        region = region ?: credentials.region
+        accessKeyId =  credentials.accessKeyId
+        secretAccessKey =  credentials.secretAccessKey
+        region = credentials.region
 
-        return [accessKeyId, secretAccessKey, region]
+        return [accessKeyId: accessKeyId , secretAccessKey:secretAccessKey , region: region]
     }
 }
 return this
