@@ -31,7 +31,7 @@ pipeline {
                     def awsUtils = load 'sample.groovy'
 
                     // Call the aws_login function with parameters
-                    def credentials = awsUtils.aws_login('your-access-key-id', 'your-secret-access-key', 'your-aws-region')
+                    def credentials = awsUtils.aws_login(accessKeyId, secretAccessKey, region)
                     def accessKeyId = credentials[0]
                     def secretAccessKey = credentials[1]
                     def region = credentials[2]
