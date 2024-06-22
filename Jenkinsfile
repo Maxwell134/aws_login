@@ -5,13 +5,16 @@ pipeline {
         stage('Install AWS CLI') {
             steps {
                 script {
-                    // Check if pip3 is installed
-                   sh """
-                    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-                        unzip awscliv2.zip
-                         ./aws/install
-                    """
-                     // Verify the AWS CLI installation
+                    // Download AWS CLI v2 ZIP archive
+                    sh 'curl -o awscliv2.zip https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip'
+
+                    // Unzip AWS CLI v2 archive
+                    sh 'unzip -o awscliv2.zip'
+
+                    // Install AWS CLI v2
+                    sh './aws/install'
+
+                    // Verify AWS CLI installation
                     sh 'aws --version'
                 }
             }
@@ -24,13 +27,10 @@ pipeline {
                     def awsUtils = load 'sample.groovy'
 
                     // Call the aws_login function with parameters
-                    def credentials = awsUtils.aws_login(accessKeyId, secretAccessKey, region)
+                    def credentials = awsUtils.aws_login('your-access-key-id', 'your-secret-access-key', 'your-aws-region')
                     def accessKeyId = credentials[0]
                     def secretAccessKey = credentials[1]
                     def region = credentials[2]
-
-                    // Ensure ~/.local/bin is in the PATH
-                    env.PATH = "${env.HOME}/.local/bin:${env.PATH}"
 
                     // Configure AWS CLI with the credentials and region
                     sh """
