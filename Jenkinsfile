@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        AWS_ACCESS_KEY_ID = ''
+        AWS_SECRET_ACCESS_KEY = ''
+        AWS_REGION = ''
+    }
+
     stages {
         stage('Install and Configure AWS CLI') {
             steps {
@@ -9,7 +15,7 @@ pipeline {
                     def awsUtils = load 'sample.groovy'
 
                     // Call the aws_login function and retrieve credentials
-                    def credentials = awsUtils.aws_login(accessKeyId, secretAccessKey, region)
+                    def credentials = awsUtils.aws_login(env.AWS_ACCESS_KEY_ID, env.AWS_SECRET_ACCESS_KEY, env.AWS_REGION)
 
                     // Extract individual credentials from the returned map
                     def accessKeyId = credentials.accessKeyId
@@ -21,7 +27,7 @@ pipeline {
                     echo "aws_secret_access_key: ${secretAccessKey}"
                     echo "region: ${region}"
 
-                    // // Configure AWS CLI with retrieved credentials
+                    // Configure AWS CLI with retrieved credentials
                     // sh """
                     // aws configure set aws_access_key_id ${accessKeyId}
                     // aws configure set aws_secret_access_key ${secretAccessKey}
