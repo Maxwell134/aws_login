@@ -2,19 +2,19 @@ pipeline {
     agent any
 
     stages {
-        // stage('Setup AWS Login') {
-        //     steps {
-        //         script {
-        //             // Install AWS CLI if not already installed
-        //             sh """
-        //             if ! command -v aws &> /dev/null
-        //             then
-        //                 echo "AWS CLI not found. Installing..."
-        //                 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        //                 unzip awscliv2.zip
-        //                 sudo ./aws/install
-        //             fi
-        //             """
+        stage('Setup AWS Login') {
+            steps {
+                script {
+                    // Install AWS CLI if not already installed
+                    // sh """
+                    // if ! command -v aws &> /dev/null
+                    // then
+                    //     echo "AWS CLI not found. Installing..."
+                    //     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                    //     unzip awscliv2.zip
+                    //     sudo ./aws/install
+                    // fi
+                    // """
 
                     // Load the Groovy script
                     def awsUtils = load 'sample.groovy'
