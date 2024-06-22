@@ -54,7 +54,7 @@ pipeline {
     post {
         always {
             // Clean up workspace at the end of the pipeline
-            sh 'rm -rf $WORKSPACE'
+            cleanWs()
         }
     }
 }
