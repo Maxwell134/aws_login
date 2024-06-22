@@ -44,6 +44,8 @@ pipeline {
                 script {
                     sh 'cat $WORKSPACE'
                     
-                }
+                }    
+            }
+        }
     }
 }
