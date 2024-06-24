@@ -59,17 +59,16 @@
 //     }
 // }
 
-pipeline {
+ pipeline {
     agent any
 
     stages {
         stage('Docker Login') {
             steps {
                 script {
-                    // Define the dockerLogin function
-                    def dockerLogin = { credentials ->
-                        def jsonSlurper = new groovy.json.JsonSlurper()
-                        def dockerCredentials = jsonSlurper.parseText(credentials)
+                    // Use the withCredentials step to handle secret text
+                    withCredentials([string(credentialsId: 'docker-credentials', variable: 'DOCKER_CREDENTIALS')]) {
+                        def dockerCredentials = readJSON text: env.DOCKER_CREDENTIALS
 
                         def username = dockerCredentials.username
                         def password = dockerCredentials.password
@@ -78,12 +77,6 @@ pipeline {
                         sh """
                             echo $password | docker login $registry -u $username --password-stdin
                         """
-                    }
-
-                    // Use the withCredentials step to handle secret text
-                    withCredentials([string(credentialsId: 'docker-credentials', variable: 'DOCKER_CREDENTIALS')]) {
-                        // Call the dockerLogin function with the Docker credentials
-                        dockerLogin(env.DOCKER_CREDENTIALS)
                     }
                 }
             }
