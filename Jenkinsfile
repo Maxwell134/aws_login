@@ -68,7 +68,7 @@
                 script {
                     // Use the withCredentials step to handle secret text
                     withCredentials([string(credentialsId: 'docker-credentials', variable: 'DOCKER_CREDENTIALS')]) {
-                        def dockerCredentials = readJSON text: env.DOCKER_CREDENTIALS
+                        def dockerCredentials = readJSON text: DOCKER_CREDENTIALS
 
                         def username = dockerCredentials.username
                         def password = dockerCredentials.password
