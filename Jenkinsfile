@@ -75,7 +75,7 @@
                         
 
                       
-                            sh 'docker login -u $username --password-stdin'
+                            sh 'docker login -u $username -p $password'
                       
                     }
                 }
