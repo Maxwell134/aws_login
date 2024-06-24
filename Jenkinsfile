@@ -66,13 +66,23 @@ pipeline {
         stage('Docker Login') {
             steps {
                 script {
-                    // Load the Groovy script with the dockerLogin function
-                    def dockerScript = load 'dockerLogin.groovy'
-
                     // Use the withCredentials step to handle secret text
                     withCredentials([string(credentialsId: 'docker-credentials', variable: 'DOCKER_CREDENTIALS')]) {
+                        def dockerLogin(credentials) {
+                            def jsonSlurper = new groovy.json.JsonSlurper()
+                            def dockerCredentials = jsonSlurper.parseText(credentials)
+
+                            def username = dockerCredentials.username
+                            def password = dockerCredentials.password
+                            
+
+                            sh """
+                                echo $password | docker login -u $username --password-stdin
+                            """
+                        }
+
                         // Call the dockerLogin function with the Docker credentials
-                        dockerScript.dockerLogin(env.DOCKER_CREDENTIALS)
+                        dockerLogin(env.DOCKER_CREDENTIALS)
                     }
                 }
             }
@@ -81,24 +91,3 @@ pipeline {
         // Add more stages as needed
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
