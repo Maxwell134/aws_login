@@ -72,6 +72,8 @@
 
                         def username = dockerCredentials.username
                         def password = dockerCredentials.password
+                        'cat $username'
+                        'cat $password'
                         
 
                       
