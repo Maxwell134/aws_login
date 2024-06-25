@@ -87,12 +87,12 @@
                 }
             }
         }
-        // stage('Docker Images') {
-        //     steps {
-        //         script {
-        //            sh 'docker images'
-        //         }
-        //     }
-        // }
+        stage('Docker Images') {
+            steps {
+                script {
+                   sh 'az account show'
+                }
+            }
+        }
     }
 }
