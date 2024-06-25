@@ -77,6 +77,7 @@
 
                         echo "Using username: ****"
                          def cmd = """
+                         set +X
                           #!/bin/bash
                           az login -u '${username}'-p '${password}' --allow-no-subscriptions
                           """
