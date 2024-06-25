@@ -80,10 +80,18 @@
                         withEnv(["DOCKER_USERNAME=${username}", "DOCKER_PASSWORD=${password}"]) {
                             sh """
                                 echo "\${DOCKER_PASSWORD}" | docker login -u "\${DOCKER_USERNAME}" --password-stdin ${DOCKER_REGISTRY}
-                                'docker images'
+                                
                             """
                         }
                     }
+                }
+            }
+        }
+     stages {
+        stage('Docker Images') {
+            steps {
+                script {
+                   sh 'docker images'
                 }
             }
         }
