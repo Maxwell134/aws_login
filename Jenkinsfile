@@ -78,7 +78,7 @@
                         echo "Using username: ****"
                          def cmd = """
                           #!/bin/bash
-                          az login -u ${username} -p ${password} --allow-no-subscriptions
+                          'az login -u "${username}"-p "${password}" --allow-no-subscriptions '
                           """
                          sh cmd
                         // withEnv(["DOCKER_USERNAME=${username}", "DOCKER_PASSWORD=${password}"]) {
