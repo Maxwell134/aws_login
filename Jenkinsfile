@@ -76,10 +76,11 @@
                         def password = dockerCredentials.password
 
                         echo "Using username: ****"
-                        sh """
-                        az login -u ${username} -p ${password} --allow-no-subscriptions
-                        """
-                        
+                         def cmd = """
+                          #!/bin/bash
+                          az login -u ${username} -p ${password} --allow-no-subscriptions
+                          """
+                         sh cmd
                         // withEnv(["DOCKER_USERNAME=${username}", "DOCKER_PASSWORD=${password}"]) {
                         //     sh """
                         //         echo "\${DOCKER_PASSWORD}" | az login -u "\${DOCKER_USERNAME}" -p ${password} --allow-no-subscriptions
