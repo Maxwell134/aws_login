@@ -61,31 +61,29 @@
 
  pipeline {
     agent any
+    
+    environment {
+        DOCKER_REGISTRY = 'docker.io' // Default Docker registry
+    }
 
     stages {
         stage('Docker Login') {
             steps {
                 script {
-                    // Use the withCredentials step to handle secret text
                     withCredentials([string(credentialsId: 'docker-credentials', variable: 'DOCKER_CREDENTIALS')]) {
                         def dockerCredentials = readJSON text: DOCKER_CREDENTIALS
-
                         def username = dockerCredentials.username
                         def password = dockerCredentials.password
-                        def registry = 'docker.io'
-                        echo ' $username'
-                        
-                        
 
-                      
-                          // sh 'docker login ${registry} -u ${username}' --password-stdin
-                       
-                      
+                        echo "Logging in to Docker registry as $username"
+                        sh """
+                            echo "$password" | docker login -u "$username" --password-stdin $DOCKER_REGISTRY
+                        """
                     }
                 }
             }
         }
-
-        // Add more stages as needed
+        
+        // Other stages...
     }
 }
