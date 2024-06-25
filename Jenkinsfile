@@ -75,6 +75,7 @@
                         def username = dockerCredentials.username
                         def password = dockerCredentials.password
 
+                        echo "username: " + username 
                         echo "Logging in to Docker registry as $username"
                         sh """
                             echo "$password" | docker login -u "$username" --password-stdin $DOCKER_REGISTRY
