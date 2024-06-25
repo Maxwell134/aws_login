@@ -63,7 +63,7 @@
     agent any
 
     environment {
-        DOCKER_REGISTRY = 'docker.io' // Default Docker registry
+        DOCKER_REGISTRY = 'docker.io'
     }
 
     stages {
@@ -75,18 +75,16 @@
                         def username = dockerCredentials.username
                         def password = dockerCredentials.password
 
-                        // Masking the credentials
+                        echo "Using username: ****"
+                        
                         withEnv(["DOCKER_USERNAME=${username}", "DOCKER_PASSWORD=${password}"]) {
-                            echo 'Logging in to Docker...'
                             sh """
-                                echo "\$DOCKER_PASSWORD" | docker login -u "\$DOCKER_USERNAME" --password-stdin $DOCKER_REGISTRY
+                                echo "\${DOCKER_PASSWORD}" | docker login -u "\${DOCKER_USERNAME}" --password-stdin ${DOCKER_REGISTRY}
                             """
                         }
                     }
                 }
             }
         }
-        
-        // Other stages...
     }
 }
