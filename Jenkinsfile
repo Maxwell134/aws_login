@@ -73,12 +73,12 @@
                         def username = dockerCredentials.username
                         def password = dockerCredentials.password
                         def registry = 'docker.io'
-                        'cat $username'
-                        'cat $password'
+                        echo ' $username'
+                        
                         
 
                       
-                          sh 'docker login ${registry} -u ${username}' --password-stdin
+                          // sh 'docker login ${registry} -u ${username}' --password-stdin
                        
                       
                     }
