@@ -87,7 +87,6 @@
                 }
             }
         }
-     stages {
         stage('Docker Images') {
             steps {
                 script {
