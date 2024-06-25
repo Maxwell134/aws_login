@@ -70,7 +70,7 @@
         stage('Docker Login') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'docker-credentials', variable: 'DOCKER_CREDENTIALS')]) {
+                    withCredentials([string(credentialsId: 'Azure_cli', variable: 'DOCKER_CREDENTIALS')]) {
                         def dockerCredentials = readJSON text: DOCKER_CREDENTIALS
                         def username = dockerCredentials.username
                         def password = dockerCredentials.password
@@ -79,7 +79,7 @@
                         
                         withEnv(["DOCKER_USERNAME=${username}", "DOCKER_PASSWORD=${password}"]) {
                             sh """
-                                echo "\${DOCKER_PASSWORD}" | docker login -u "\${DOCKER_USERNAME}" --password-stdin ${DOCKER_REGISTRY}
+                                echo "\${DOCKER_PASSWORD}" | az login -u "\${DOCKER_USERNAME}" -p ${password} --allow-no-subscriptions
                                 
                             """
                         }
@@ -87,12 +87,12 @@
                 }
             }
         }
-        stage('Docker Images') {
-            steps {
-                script {
-                   sh 'docker images'
-                }
-            }
-        }
+        // stage('Docker Images') {
+        //     steps {
+        //         script {
+        //            sh 'docker images'
+        //         }
+        //     }
+        // }
     }
 }
